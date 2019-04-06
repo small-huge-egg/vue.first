@@ -31,7 +31,7 @@
 import mui from '../../lib/mui/js/mui.min.js'
 import { Toast } from "mint-ui"
 
-export default{
+export default {
   data(){
     return {
       cates:[],//手动添加全部中的信息
