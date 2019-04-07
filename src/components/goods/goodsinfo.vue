@@ -106,6 +106,14 @@ export default {
     //点击加入购物车
     addToShopCar(){
       this.isview = !this.isview; 
+      let goodsinfo = {//拼接出一个car这需要的数据
+        id:this.id,
+        count:this.selectedCount,
+        price:this.goodsdetail.sell_price,
+        selected:true
+      }
+      //调用store中的mutations来将商品加入购物车
+      this.$store.commit("addTocar",goodsinfo);
     },
 
     //小球动画
