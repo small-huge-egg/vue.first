@@ -52,3 +52,6 @@ let vm = new Vue({
     render: c=>c(app),//一个组件占一个页面
     router//1.4挂载路由对象到VM实例上
 })
+
+
+// --host 192.168.199.207手机挂安插 

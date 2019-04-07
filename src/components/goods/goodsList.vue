@@ -1,63 +1,56 @@
 <template>
   <div class="goods-list">
 
-    <div class="goods-item">
-      <img src="http://cdimg.good.cc/images/UploadImage/0/1636/1636603.jpg" alt="">
-      <h1 class="title">小米Note 16G双网铜版</h1>
+    <div class="goods-item" v-for="item in goodslist" :key="item.id" @click="goDetail(item.id)">
+      <img :src="item.img_url" alt="">
+      <h1 class="title">{{item.title}}</h1>
       <div class="info">
         <p class="price">
-          <span class="now">￥2199</span>
-          <span class="old">￥2299</span>
+          <span class="now">￥{{item.sell_price}}</span>
+          <span class="old">￥{{item.market_price}}</span>
         </p>
         <p class="sell">
           <span>热卖中</span>
-          <span>剩60件</span>
+          <span>{{item.stock_quantity}}</span>
         </p>
       </div>
     </div>
 
-    <div class="goods-item">
-        <img src="http://cdimg.good.cc/images/UploadImage/0/1636/1636603.jpg" alt="">
-        <h1 class="title">小米Note 16G双网铜版</h1>
-        <div class="info">
-          <p class="price">
-            <span class="now">￥2199</span>
-            <span class="old">￥2299</span>
-          </p>
-          <p class="sell">
-            <span>热卖中</span>
-            <span>剩60件</span>
-          </p>
-        </div>
-      </div>
 
-      <div class="goods-item">
-          <img src="http://cdimg.good.cc/images/UploadImage/0/1636/1636603.jpg" alt="">
-          <h1 class="title">小米Note 16G双网铜版</h1>
-          <div class="info">
-            <p class="price">
-              <span class="now">￥2199</span>
-              <span class="old">￥2299</span>
-            </p>
-            <p class="sell">
-              <span>热卖中</span>
-              <span>剩60件</span>
-            </p>
-          </div>
-        </div> 
-
+    <mt-button type="danger" size="large" @click="getmore">加载更多</mt-button>
   </div>
 </template>
 <script>
 export default {
   data() {
-    return{}
+    return{
+      pageindex:1,//分页的页数
+      goodslist:[]//存放商品列表的数组
+    }
   },
   created(){
-
+    this.getGoodsList()
   },
   methods:{
-
+    getGoodsList(){
+      this.$http.get('api/getgoods?pageindex='+this.pageindex).then( result =>{
+        if(result.body.status===0){
+          this.goodslist=this.goodslist.concat(result.body.message);
+        }
+      })
+    },
+    getmore(){
+      this.pageindex++;
+      this.getGoodsList();
+    },
+    goDetail(id){//使用js形式实现路由导航
+      //方法1：
+      // this.$router.push("/home/goodsinfo/" + id);
+      //方法2： 传递对象
+      // this.$router.push({path:"/home/goodsinfo/" + id});
+      //方法3： 传递命名的路由
+      this.$router.push({name:"goodslist",params:{id}});
+    }
   }
 }
 </script>
