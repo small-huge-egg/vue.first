@@ -2,7 +2,8 @@
     <div class="numbox-container">
       <div class="mui-numbox" data-numbox-min='1' style="height:25px">
         <button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-        <input id="test" class="mui-input-numbox" type="number" value="1" @change="countChanged" ref="numbox"/>
+        <!-- readonly	html语法 把输入字段设置为只读。 -->
+        <input id="test" class="mui-input-numbox" type="number" :value="initcount" @change="countChanged" ref="numbox" readonly/>
         <button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
       </div>
     </div>
@@ -17,9 +18,13 @@
     },
     methods:{
       countChanged(){//当文本框数量发生改变时
-       
+       this.$store.commit("updateGoodsInfo",{
+         id:this.goodsid,
+         count:this.$refs.numbox.value
+       })
       },
-    } 
+    },
+    props:["initcount","goodsid"]
   }
 </script>
 <style>
