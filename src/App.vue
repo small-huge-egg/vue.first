@@ -1,7 +1,11 @@
 <template>
   <div class="app-container">
     <!-- 顶部header区域 -->
-    <mt-header fixed title="巨蛋今天也很快乐" style="z-index:20"></mt-header>
+    <mt-header fixed title="巨蛋今天也很快乐" style="z-index:20">
+      <span @click="goback" slot="left">
+        <mt-button icon="back" v-show="flag">返回</mt-button>
+      </span>
+    </mt-header>
 
 		<!-- 中间router-view区域 -->
 		<transition>
@@ -32,7 +36,32 @@
 </template>
 
 <script>
-
+export default{
+  data(){
+    return {
+      flag:false
+    }
+  },
+  created(){
+    // if(this.$route.path==)
+    this.flag=this.$route.path==="/home"?false:true
+  },
+  methods:{
+    goback(){
+      //点击回退
+      this.$router.go(-1);
+    }
+  },
+  watch:{//监听事件
+    "$route.path":function(newval){//如果路由地址发生变化
+      if(newval == "/home"){
+        this.flag=false;
+      }else{
+        this.flag=true;
+      }     
+    }
+  }
+}
 </script>
 
 

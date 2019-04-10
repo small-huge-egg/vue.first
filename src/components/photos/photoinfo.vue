@@ -48,7 +48,6 @@ export default{
             item.w=600;
             item.h=400;
             item.msrc=item.src;
-            console.log(item.msrc);
           });
           //将图片数据添加到定义的缩略图数组中
           this.slides1=result.body.message;

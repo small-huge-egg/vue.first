@@ -3,28 +3,35 @@
     <div class="goods-list">
 
       <!-- 商品列表项区域 -->
-      <div class="mui-card" v-for="item in goodslist" :key="item.id">
+      <div class="mui-card" v-for="(item,i) in goodslist" :key="item.id">
         <div class="mui-card-content">
           <div class="mui-card-content-inner">
-            <mt-switch></mt-switch>
+            <mt-switch 
+            v-model="$store.getters.getGoodsSelected[item.id]"
+            @change="selectedChanged(item.id,$store.getters.getGoodsSelected[item.id])"></mt-switch>
             <img :src="item.thumb_path" alt="">
             <div class="info">
               <h1>{{item.title}}</h1>
               <p>
                 <span class="price">￥{{item.sell_price}}</span>
                 <numbox :initcount="$store.getters.getGoodsCount[item.id]" :goodsid="item.id"></numbox>
-                <a href="#">删除</a>
+                <!-- item.id用于删除main.js里的car,i用于删除goodsinfo里面对应i索引的元素 -->
+                <a href="#" @click.prevent="remove(item.id,i)">删除</a>
               </p>
             </div>
           </div>
           </div>
       </div>
 
+      <!-- 商品结算区域 -->
       <div class="mui-card">
         <div class="mui-card-content">
-          <div class="mui-card-content-inner">
-            
-            <h1>小米很多时候看见很多客户到访</h1>
+          <div class="mui-card-content-inner jiesuan">
+            <div class="left">
+              <p>总计(不含运费)</p>
+              <p>已勾选商品<span class="red">{{$store.getters.getGoodsCountAndAmount.count}}</span>件，总价<span class="red">￥{{$store.getters.getGoodsCountAndAmount.price}}</span></p>
+            </div>
+            <mt-button type="danger">去结算</mt-button>
           </div>
         </div>
       </div>
@@ -60,6 +67,17 @@ export default{
           this.goodslist = result.body.message;
         }
       })
+    },
+
+    remove(id,index){//点击删除，1.把goodslist里的对应索引的数据删除，2.把car里的id对应的数据删除
+      this.goodslist.splice(index,1)//1.删除了goodslist里的对应索引的数据
+
+      //2.把car里的id对应的数据删除
+      this.$store.commit("deleteCarShop",id)
+    },
+
+    selectedChanged(id,val){//每当点击按钮，把selected状态传给store的selected
+      this.$store.commit("updateGoodsSelected",{id,selected:val})
     }
   },
   components:{
@@ -71,6 +89,9 @@ export default{
 .goods-list-container{
   background: #eee;
   overflow: hidden;
+}
+.mui-card{
+  width:94%;
 }
 .mui-card-content-inner{
   display:flex;
@@ -90,6 +111,15 @@ export default{
 }
 .goods-list .info .price{
   color:red;
+  font-weight:bold;
+}
+.jiesuan{
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.jiesuan .red{
+  color: red;
   font-weight:bold;
 }
 </style>

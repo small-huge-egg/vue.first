@@ -65,7 +65,6 @@ export default {
           content:this.msg.trim()
         }).then(result=>{
           if (result.body.status === 0) {
-            // this.comments.unshift(result.body.message);
             let cmt = {
               user_name:"匿名用户",
               add_time:Date.now(),
