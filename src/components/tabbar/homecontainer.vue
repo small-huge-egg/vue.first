@@ -48,14 +48,21 @@ export default {
   },
   methods:{
      getLunbotu(){
-       this.$http.get('api/getlunbo').then(result=>{
-          // console.log(result.body);
-          if(result.body.status===0){
-           this.lunbotuList=result.body.message;
-          }else{
-           Toast('加载失败')
-         }
-       })
+       this.lunbotuList = [
+         {src:"http://img.18183.com/uploads/allimg/171127/193-1G12G41254.jpg"},
+
+         {src:"http://img.smzy.com/imges/2018/0509/20180509063234529.jpg"},
+         {src:"http://img4.imgtn.bdimg.com/it/u=225587852,2212930322&fm=26&gp=0.jpg"}
+       ]
+       console.log(this.lunbotuList)
+      //  this.$http.get('api/getlunbo').then(result=>{
+      //     // console.log(result.body);
+      //     if(result.body.status===0){
+      //      this.lunbotuList=result.body.message;
+      //     }else{
+      //      Toast('加载失败')
+      //    }
+      //  })
      }
   },
   components:{

@@ -4,7 +4,7 @@
     <mt-swipe :auto="4000">
       <!-- lunbotuList 由父组件向子组件传值来设置 -->
       <mt-swipe-item v-for='item in lunbotuList' :key='item.id'>
-        <img class="lunbo" :src="item.img" :class="{full:isfull}"></img>
+        <img class="lunbo" :src="item.src" :class="{full:isfull}"></img>
       </mt-swipe-item>
     </mt-swipe>
 
